@@ -1,13 +1,18 @@
 // io library from the standard library
+use rand::Rng;
 use std::io;
 
 fn main() {
     println!("Guess the number!");
 
+    let secret_number = rand::thread_rng().gen_range(1..101);
+
+    println!("The secret number is: {}", secret_number);
+
     println!("Please input your guess.");
 
     // 'let' is used to create a variable
-        // variables are immutable by default
+    // variables are immutable by default
     // 'mut' makes the variable mutable
     let mut guess = String::new();
 
