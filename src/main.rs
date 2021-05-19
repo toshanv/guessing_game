@@ -8,8 +8,6 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1..101);
 
-    println!("The secret number is: {}", secret_number);
-
     loop {
         println!("Please input your guess.");
 
@@ -28,12 +26,13 @@ fn main() {
 
         // shadow the int guess onto the existing string guess
         // u32: unsigned, 32-bit integer (good default for small, positive numbers)
-        let guess: u32 = guess
-            // removes white space from beginning and end
-            .trim()
-            // parses string into a u32 (specified above)
-            .parse()
-            .expect("Please type a number!");
+        let guess: u32 = match guess.trim().parse() {
+            // if parse is successful, returns an Ok value that contains the num
+            Ok(num) => num,
+            // if parse fails, returns Err value
+            // '_' is catchall value (matches all Err values)
+            Err(_) => continue,
+        };
 
         // print user input
         println!("You guessed: {}", guess);
