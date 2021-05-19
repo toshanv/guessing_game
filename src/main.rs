@@ -1,5 +1,6 @@
-// io library from the standard library
 use rand::Rng;
+use std::cmp::Ordering;
+// io library from the standard library
 use std::io;
 
 fn main() {
@@ -23,7 +24,22 @@ fn main() {
         // 'mut' makes the reference mutable
         .read_line(&mut guess)
         .expect("Failed to read line");
+    
+    // shadow the int guess onto the existing string guess
+    // u32: unsigned, 32-bit integer (good default for small, positive numbers)
+    let guess: u32 = guess
+        // removes white space from beginning and end
+        .trim()
+        // parses string into a u32 (specified above)
+        .parse()
+        .expect("Please type a number!");
 
     // print user input
     println!("You guessed: {}", guess);
+
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
 }
